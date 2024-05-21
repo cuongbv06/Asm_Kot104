@@ -1,14 +1,15 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.phwnam.furnitureshop
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +21,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -44,24 +44,27 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.phwnam.furnitureshop.ui.theme.Merriweather
 import com.phwnam.furnitureshop.ui.theme.NunitoSans
 
-
-class LoginActivity : ComponentActivity() {
+class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            LoginScreen()
+        setContent{
+            SignUpScreen()
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreen() {
+fun SignUpScreen() {
+    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var repassword by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -86,15 +89,7 @@ fun LoginScreen() {
         ){
             Text(
                 fontFamily = Merriweather,
-                text = "Hello!",
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF909090)
-            )
-
-            Text(
-                fontFamily = Merriweather,
-                text = "WELCOME BACK",
+                text = "WELCOME",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
@@ -111,6 +106,14 @@ fun LoginScreen() {
                 .padding(start = 25.dp, top = 25.dp, bottom = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            UnderlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Name") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(26.dp))
             UnderlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -142,15 +145,34 @@ fun LoginScreen() {
 
             Spacer(modifier = Modifier.height(26.dp))
 
+            UnderlinedTextField(
+                value = repassword,
+                onValueChange = { repassword = it },
+                label = { Text("Confirm Password") },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                trailingIcon = {
+                    IconButton(onClick = { /* handle show/hide password */ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_eye), // Replace with your eye icon
+                            contentDescription = "Toggle Password Visibility",
+                            modifier = Modifier
+                                .width(20.dp)
+                                .height(20.dp)
+                        )
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(26.dp))
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .padding(end = 25.dp)
             ) {
-                TextButton(onClick = { /* handle forgot password */ }) {
-                    Text("Forgot Password", color = Color.Black, fontFamily = NunitoSans)
-                }
 
                 Spacer(modifier = Modifier.height(25.dp))
 
@@ -162,46 +184,19 @@ fun LoginScreen() {
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = " Log in", fontFamily = NunitoSans, fontSize = 16.sp, modifier = Modifier.padding(5.dp))
+                    Text(text = " SIGN UP", fontFamily = NunitoSans, fontSize = 16.sp, modifier = Modifier.padding(5.dp))
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                TextButton(onClick = { /* handle sign up */ }) {
-                    Text("SIGN UP", color = Color.Black, fontFamily = NunitoSans)
+                Row (
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Text(text = "Already have account? ", fontFamily = NunitoSans)
+                    TextButton(onClick = { /* handle sign up */ }) {
+                        Text("SIGN IN", color = Color.Black, fontFamily = NunitoSans)
+                    }
                 }
             }
         }
-    }
-}
-@Composable
-fun UnderlinedTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: @Composable (() -> Unit)? = null,
-    modifier: Modifier = Modifier,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    trailingIcon: @Composable (() -> Unit)? = null
-) {
-    Column(modifier = modifier) {
-        TextField(
-            value = value,
-            onValueChange = onValueChange,
-            label = label,
-            visualTransformation = visualTransformation,
-            keyboardOptions = keyboardOptions,
-            trailingIcon = trailingIcon,
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.textFieldColors(
-                unfocusedIndicatorColor = Color(0xFFE0E0E0),
-                focusedIndicatorColor = Color.Gray,
-                containerColor = Color.Transparent,
-                cursorColor = Color.Black,
-                unfocusedTextColor = Color(0xFFE0E0E0),
-                focusedTextColor = Color.Black
-            )
-
-        )
     }
 }

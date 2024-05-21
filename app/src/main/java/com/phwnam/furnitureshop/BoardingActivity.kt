@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.font.FontWeight
@@ -35,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.phwnam.furnitureshop.ui.theme.Gelasio_Family
+import com.phwnam.furnitureshop.ui.theme.NunitoSans
 
 class BoardingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,13 +60,15 @@ fun BoardingScreen(){
             painter = painterResource(id = R.drawable.boarding),
             contentDescription = null,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize(),
+            contentScale = ContentScale.Crop
+
         )
         Column (
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(20.dp, top = 80.dp),
+                .padding(0.dp, top = 80.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
 
@@ -72,18 +77,20 @@ fun BoardingScreen(){
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp),
+                    .padding(start = 30.dp),
             ) {
                 Text(
                     text = "MAKE YOUR",
+                    fontFamily = Gelasio_Family,
                     fontSize = 30.sp,
                     color = Color(0xFF606060),
                     modifier = Modifier
-                        .padding(bottom = 5.dp)
+                        .padding(bottom = 0.dp)
                 )
                 Text(
                     text = "HOME BEAUTIFUL",
-                    fontSize = 40.sp,
+                    fontFamily = Gelasio_Family,
+                    fontSize = 36.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF303030)
                 )
@@ -91,9 +98,10 @@ fun BoardingScreen(){
             Text(
                 text = "The best simple place where you discover most wonderful furnitures and make your home beautiful",
                 color = Color(0xFF808080),
+                fontFamily = NunitoSans,
                 fontSize = 19.sp,
                 modifier = Modifier
-                    .padding(start = 30.dp, top = 30.dp, end = 20.dp),
+                    .padding(start = 60.dp, top = 30.dp, end = 30.dp),
                 lineHeight = 40.sp
             )
             Spacer(modifier = Modifier.height(180.dp))
@@ -104,7 +112,7 @@ fun BoardingScreen(){
                 ),
                 shape = RoundedCornerShape(4.dp)
             ) {
-                Text(text = " Get Started", fontSize = 16.sp, modifier = Modifier.padding(5.dp))
+                Text(text = " Get Started", fontFamily = Gelasio_Family, fontSize = 16.sp, modifier = Modifier.padding(5.dp))
             }
 
 

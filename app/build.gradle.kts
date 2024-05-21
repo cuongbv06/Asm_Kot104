@@ -51,6 +51,9 @@ android {
 
 dependencies {
 
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.6.7")
+    implementation ("androidx.compose.material3:material3:1.0.0") // Cập nhật phiên bản mới nhất nếu có
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
