@@ -44,6 +44,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.phwnam.furnitureshop.ui.theme.Merriweather
 import com.phwnam.furnitureshop.ui.theme.NunitoSans
 
@@ -52,14 +54,17 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LoginScreen()
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
-fun LoginScreen() {
+fun previewLogin(){
+    val navController = rememberNavController() // Tạo một NavController giả
+    LoginScreen(navController = navController)
+}
+@Composable
+fun LoginScreen(navController: NavHostController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -155,7 +160,9 @@ fun LoginScreen() {
                 Spacer(modifier = Modifier.height(25.dp))
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                              navController.navigate("home")
+                              },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF242424)
                     ),
@@ -167,7 +174,9 @@ fun LoginScreen() {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                TextButton(onClick = { /* handle sign up */ }) {
+                TextButton(onClick = {
+                    navController.navigate("signup")
+                }) {
                     Text("SIGN UP", color = Color.Black, fontFamily = NunitoSans)
                 }
             }

@@ -36,6 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.phwnam.furnitureshop.ui.theme.Gelasio_Family
 import com.phwnam.furnitureshop.ui.theme.NunitoSans
 
@@ -43,14 +46,18 @@ class BoardingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            BoardingScreen()
         }
 
     }
 }
 @Preview(showBackground = true)
 @Composable
-fun BoardingScreen(){
+fun previewBoarding(){
+    val navController = rememberNavController() // Tạo một NavController giả
+    BoardingScreen(navController = navController)
+}
+@Composable
+fun BoardingScreen(navController: NavHostController){
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -106,7 +113,9 @@ fun BoardingScreen(){
             )
             Spacer(modifier = Modifier.height(180.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                          navController.navigate("login")
+                          },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF242424)
                 ),

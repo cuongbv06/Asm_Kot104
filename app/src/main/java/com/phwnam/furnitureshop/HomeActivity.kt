@@ -22,6 +22,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Card
 import androidx.compose.material3.*
 import androidx.compose.material3.Icon
@@ -34,26 +36,35 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HomeScreen()
         }
     }
 }
 
 @Preview(showBackground = true)
+@Composable
+    fun preview(){
+    val navController = rememberNavController() // Tạo một NavController giả
+    HomeScreen(navController = navController)
+    }
+
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,7 +73,7 @@ fun HomeScreen() {
         SearchBar()
         CategorySection()
         ProductGrid()
-//        BottomNavigationBar()
+
     }
 }
 
@@ -167,6 +178,98 @@ fun ProductItem(product: Product) {
         }
     }
 }
+
+@Composable
+fun BottomNavigationBar(navController: NavHostController) {
+    val items = listOf(
+        Screen.Home,
+        Screen.Favorites,
+        Screen.Notifications,
+        Screen.Profile
+    )
+    BottomNavigation(
+        backgroundColor = Color.White,
+        contentColor = Color.Black,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+    ) {
+        val currentRoute = currentRoute(navController)
+        items.forEach { screen ->
+            BottomNavigationItem(
+                icon = { Icon(screen.icon, contentDescription = screen.title) },
+                label = { Text(screen.title) },
+                selected = currentRoute == screen.route,
+                selectedContentColor = Color.Black,
+                unselectedContentColor = Color.Gray,
+                onClick = {
+                    if (currentRoute != screen.route) {
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                }
+            )
+        }
+    }
+}
+
+//@Composable
+//fun BottomNavigationBar() {
+//    NavigationBar(
+//        containerColor = Color(0xFFFFFFF),
+//        contentColor = Color.White
+//    ) {
+//        NavigationBarItem(
+//            icon = { Icon(painter = painterResource(id = R.drawable.ic_home), contentDescription = null) },
+//            label = {
+//                Text(
+//                    text = "Home",
+//                    style = TextStyle(color = Color.White)
+//                )
+//            },
+//            selected = false,
+//            onClick = {}
+//        )
+//        NavigationBarItem(
+//            icon = { Icon(painter = painterResource(id = R.drawable.ic_bookmark), contentDescription = null) },
+//            label = {
+//                Text(
+//                    text = "Favourite",
+//                    style = TextStyle(color = Color.White)
+//                )
+//            },
+//            selected = false,
+//            onClick = {}
+//        )
+//        NavigationBarItem(
+//            icon = { Icon(painter = painterResource(id = R.drawable.ic_notification), contentDescription = null) },
+//            label = {
+//                Text(
+//                    text = "Notification",
+//                    style = TextStyle(color = Color.White)
+//                )
+//            },
+//            selected = true,
+//            onClick = {}
+//        )
+//        NavigationBarItem(
+//            icon = { Icon(painter = painterResource(id = R.drawable.ic_person), contentDescription = null) },
+//            label = {
+//                Text(
+//                    text = "Profile",
+//                    style = TextStyle(color = Color.White)
+//                )
+//            },
+//            selected = false,
+//            onClick = {}
+//        )
+//    }
+//}
 
 //@Composable
 //fun BottomNavigationBar() {

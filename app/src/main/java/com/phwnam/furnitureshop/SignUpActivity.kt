@@ -46,6 +46,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.phwnam.furnitureshop.ui.theme.Merriweather
 import com.phwnam.furnitureshop.ui.theme.NunitoSans
 
@@ -53,14 +56,18 @@ class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            SignUpScreen()
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
-fun SignUpScreen() {
+fun previewSignUp(){
+    val navController = rememberNavController() // Tạo một NavController giả
+    SignUpScreen(navController = navController)
+}
+
+@Composable
+fun SignUpScreen(navController: NavHostController) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -192,7 +199,9 @@ fun SignUpScreen() {
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Text(text = "Already have account? ", fontFamily = NunitoSans)
-                    TextButton(onClick = { /* handle sign up */ }) {
+                    TextButton(onClick = {
+                        navController.popBackStack()
+                    }) {
                         Text("SIGN IN", color = Color.Black, fontFamily = NunitoSans)
                     }
                 }
