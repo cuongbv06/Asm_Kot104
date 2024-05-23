@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.phwnam.furnitureshop.bottomNav.BottomMainScreen
 import com.phwnam.furnitureshop.ui.theme.FurnitureShopTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,17 +30,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MainScreen()
+            BottomMainScreen()
         }
-    }
-}
-@Composable
-fun MainScreen(){
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "boarding") {
-        composable("boarding"){ BoardingScreen(navController)}
-        composable("login"){ LoginScreen(navController) }
-        composable("signup"){ SignUpScreen(navController) }
-        composable("home"){ HomeScreen(navController) }
     }
 }

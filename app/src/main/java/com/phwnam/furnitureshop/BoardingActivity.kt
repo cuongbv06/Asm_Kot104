@@ -1,5 +1,6 @@
 package com.phwnam.furnitureshop
 
+import android.content.Intent
 import android.media.Image
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.font.FontWeight
@@ -46,18 +48,15 @@ class BoardingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
+            BoardingScreen()
         }
 
     }
 }
 @Preview(showBackground = true)
 @Composable
-fun previewBoarding(){
-    val navController = rememberNavController() // Tạo một NavController giả
-    BoardingScreen(navController = navController)
-}
-@Composable
-fun BoardingScreen(navController: NavHostController){
+fun BoardingScreen(){
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -114,7 +113,8 @@ fun BoardingScreen(navController: NavHostController){
             Spacer(modifier = Modifier.height(180.dp))
             Button(
                 onClick = {
-                          navController.navigate("login")
+                          val intent = Intent(context, LoginActivity::class.java)
+                    context.startActivity(intent)
                           },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF242424)

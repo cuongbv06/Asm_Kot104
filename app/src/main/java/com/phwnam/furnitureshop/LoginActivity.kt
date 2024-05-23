@@ -2,6 +2,7 @@
 
 package com.phwnam.furnitureshop
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -36,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -54,17 +56,15 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            LoginScreen()
         }
     }
 }
 @Preview(showBackground = true)
+
 @Composable
-fun previewLogin(){
-    val navController = rememberNavController() // Tạo một NavController giả
-    LoginScreen(navController = navController)
-}
-@Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen() {
+    val context = LocalContext.current
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -161,7 +161,8 @@ fun LoginScreen(navController: NavHostController) {
 
                 Button(
                     onClick = {
-                              navController.navigate("home")
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
                               },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF242424)
@@ -175,7 +176,9 @@ fun LoginScreen(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TextButton(onClick = {
-                    navController.navigate("signup")
+
+                    val intent = Intent(context, SignUpActivity::class.java)
+                    context.startActivity(intent)
                 }) {
                     Text("SIGN UP", color = Color.Black, fontFamily = NunitoSans)
                 }
@@ -183,6 +186,7 @@ fun LoginScreen(navController: NavHostController) {
         }
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UnderlinedTextField(
     value: String,

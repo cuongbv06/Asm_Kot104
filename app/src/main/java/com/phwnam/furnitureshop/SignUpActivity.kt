@@ -1,5 +1,6 @@
 package com.phwnam.furnitureshop
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -36,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -56,6 +58,7 @@ class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
+            SignUpScreen()
         }
     }
 }
@@ -63,11 +66,12 @@ class SignUpActivity : ComponentActivity() {
 @Composable
 fun previewSignUp(){
     val navController = rememberNavController() // Tạo một NavController giả
-    SignUpScreen(navController = navController)
+    SignUpScreen()
 }
 
 @Composable
-fun SignUpScreen(navController: NavHostController) {
+fun SignUpScreen() {
+    val context = LocalContext.current
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -200,7 +204,8 @@ fun SignUpScreen(navController: NavHostController) {
                 ){
                     Text(text = "Already have account? ", fontFamily = NunitoSans)
                     TextButton(onClick = {
-                        navController.popBackStack()
+                        val activity = context as? Activity
+                        activity?.finish()
                     }) {
                         Text("SIGN IN", color = Color.Black, fontFamily = NunitoSans)
                     }
