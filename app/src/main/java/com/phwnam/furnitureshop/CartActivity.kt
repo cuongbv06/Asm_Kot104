@@ -1,6 +1,7 @@
 package com.phwnam.furnitureshop
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -179,8 +180,8 @@ fun CartSection() {
             }
             Button(
                 onClick = {
-//                        val intent = Intent(context, CheckOutActivity::class.java)
-//                        context.startActivity(intent)
+                        val intent = Intent(context, CheckOutActivity::class.java)
+                        context.startActivity(intent)
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 shape = RoundedCornerShape(8.dp),
