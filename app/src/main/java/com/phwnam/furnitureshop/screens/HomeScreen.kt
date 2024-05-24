@@ -10,39 +10,34 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.phwnam.furnitureshop.CartActivity
+import com.phwnam.furnitureshop.ProductActivity
 import com.phwnam.furnitureshop.R
 import com.phwnam.furnitureshop.ui.theme.Gelasio_Family
 import com.phwnam.furnitureshop.ui.theme.NunitoSans
@@ -50,9 +45,11 @@ import com.phwnam.furnitureshop.ui.theme.NunitoSans
 data class Item(val image: Int, val text: String)
 
 
+
 @Preview(showBackground = true)
 @Composable
 fun HomeScreen() {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,6 +65,7 @@ fun HomeScreen() {
 
 @Composable
 fun SearchBar() {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -86,7 +84,10 @@ fun SearchBar() {
             Text("BEAUTIFUL", fontFamily = Gelasio_Family, fontWeight = FontWeight.W700, fontSize = 20.sp)
         }
 
-        IconButton(onClick = { /* Handle cart click */ }) {
+        IconButton(onClick = {
+            val intent = Intent(context, CartActivity::class.java)
+            context.startActivity(intent)
+        }) {
             Icon(painterResource(id = R.drawable.ic_cart), modifier = Modifier.size(24.dp), contentDescription = "Cart")
         }
     }
@@ -113,6 +114,8 @@ data class Product(val name: String, val price: String, val image: Int)
 
 @Composable
 fun ProductSection(){
+    val context = LocalContext.current
+
     val products = listOf(
         Product("Black Simple Lamp", "12.00", R.drawable.lamp),
         Product("Minimal Stand", "25.00", R.drawable.stand),
@@ -130,7 +133,9 @@ fun ProductSection(){
     ) {
         items(items = products){product ->
             ProductRow(item = product) {
-//                val intent = Intent(context)
+                val intent = Intent(context, ProductActivity::class.java)
+                intent.putExtra("productId", product.image)
+                context.startActivity(intent)
             }
         }
     }
