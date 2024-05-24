@@ -53,7 +53,7 @@ fun BottomBar(navController: NavHostController) {
     BottomNavigation(
         backgroundColor = Color(0xFFFFFFFF),
         contentColor = Color.White,
-        modifier = Modifier.height(75.dp)
+        modifier = Modifier.height(80.dp)
     ) {
         screens.forEach { screen ->
             AddItem(

@@ -138,7 +138,7 @@ fun CartSection() {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .height(580.dp)
+            .height(595.dp)
     ) {
         items(items = products) { item ->
             CartItem(item = item)
@@ -186,8 +186,8 @@ fun CartSection() {
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
-                    .padding(10.dp)
-                    .height(60.dp)
+                    .padding(15.dp)
+                    .height(65.dp)
                     .fillMaxWidth()
             ) {
                 Text(
@@ -263,7 +263,7 @@ fun CartItem(item: Product) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp)
+            .padding(15.dp)
     ) {
         Image(
             painter = painterResource(id = item.image),
